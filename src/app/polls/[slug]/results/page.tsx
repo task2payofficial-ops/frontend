@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!data?.poll) {
     return {
-      title: 'जनमत परिणाम | थार मीडिया (Thar Media)',
+      title: 'जनमत परिणाम | अपना बीकानेर (Apna Bikaner)',
     };
   }
 
@@ -37,16 +37,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const pageUrl = `${siteUrl}/polls/${poll.slug}/results`;
 
   return {
-    title: `📊 परिणाम ग्राफ: ${poll.title} | थार मीडिया जनमत`,
-    description: `थार मीडिया (Thar Media) लाइव जनमत सर्वेक्षण परिणाम: "${poll.title}" पर जनता का मूड और प्रतिशत जानें।`,
+    title: `📊 परिणाम ग्राफ: ${poll.title} | अपना बीकानेर जनमत`,
+    description: `अपना बीकानेर (Apna Bikaner) लाइव जनमत सर्वेक्षण परिणाम: "${poll.title}" पर जनता का मूड और प्रतिशत जानें।`,
     alternates: {
       canonical: pageUrl,
     },
     openGraph: {
       title: `📊 लाइव जनमत परिणाम: ${poll.title}`,
-      description: `कुल मत: ${poll.total_votes} | थार मीडिया डिजिटल जनमत के ताज़ा आंकड़े और परिणाम ग्राफ देखें।`,
+      description: `कुल मत: ${poll.total_votes} | अपना बीकानेर डिजिटल जनमत के ताज़ा आंकड़े और परिणाम ग्राफ देखें।`,
       url: pageUrl,
-      siteName: 'Thar Media (थार मीडिया)',
+      siteName: 'अपना बीकानेर (Apna Bikaner)',
       type: 'website',
       images: [
         {
@@ -60,8 +60,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     twitter: {
       card: 'summary_large_image',
       title: `📊 परिणाम ग्राफ: ${poll.title}`,
-      description: 'थार मीडिया लाइव जनमत परिणाम ग्राफ - जनता का मूड',
-      creator: '@TharMedia',
+      description: 'अपना बीकानेर लाइव जनमत परिणाम ग्राफ - जनता का मूड',
+      creator: '@ApnaBikaner',
     },
   };
 }
@@ -109,7 +109,7 @@ export default async function PollResultsPage({ params }: Props) {
           <span>100% गोपनीय व निष्पक्ष परिणाम (Completely Anonymous Voting)</span>
         </div>
         <p className="leading-relaxed">
-          यह जनमत परिणाम ग्राफ केवल सामूहिक प्रतिशत रुझानों को प्रदर्शित करता है। थार मीडिया किसी भी मतदाता का नाम, व्यक्तिगत संपर्क या संवेदनशील विवरण सार्वजनिक नहीं करता है।
+          यह जनमत परिणाम ग्राफ केवल सामूहिक प्रतिशत रुझानों को प्रदर्शित करता है। अपना बीकानेर किसी भी मतदाता का नाम, व्यक्तिगत संपर्क या संवेदनशील विवरण सार्वजनिक नहीं करता है।
         </p>
       </div>
     </main>

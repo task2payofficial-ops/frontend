@@ -67,7 +67,7 @@ export default function AdBanner({ ad, position, fallbackText }: AdBannerProps) 
     <div className="w-full my-3 flex flex-col items-center">
       <div className="w-full py-3 px-4 rounded-lg bg-slate-50/70 border border-dashed border-slate-200 text-center text-xs text-slate-400 flex items-center justify-between">
         <span className="text-[10px] uppercase tracking-wider text-slate-400">विज्ञापन स्पेस उपलब्ध</span>
-        <span>{fallbackText || 'अपने ब्रांड का प्रचार थार मीडिया (Thar Media) पर करें'}</span>
+        <span>{fallbackText || 'अपने ब्रांड का प्रचार अपना बीकानेर (Apna Bikaner) पर करें'}</span>
         <a href="/advertise" className="text-red-600 font-semibold hover:underline">संपर्क करें →</a>
       </div>
     </div>

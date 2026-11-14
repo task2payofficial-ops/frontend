@@ -22,23 +22,23 @@ export default function Footer() {
           <div className="lg:col-span-2 space-y-4">
             <Link href="/" className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-red-600 via-red-700 to-amber-500 flex items-center justify-center text-white font-black text-xl shadow-md border border-red-500/30">
-                था
+                अ
               </div>
               <div className="flex items-center gap-1.5">
                 <span className="text-2xl font-black text-white tracking-tight">
-                  थार <span className="text-red-500">मीडिया</span>
+                  अपना <span className="text-red-500">बीकानेर</span>
                 </span>
                 <span className="text-[10px] font-black uppercase px-1.5 py-0.5 bg-amber-500 text-slate-950 rounded">
-                  THAR MEDIA
+                  APNA BIKANER
                 </span>
               </div>
             </Link>
             <p className="text-xs text-slate-400 leading-relaxed pr-4">
-              थार मीडिया (Thar Media) राजस्थान व मरुधरा का प्रमुख और निर्भीक डिजिटल समाचार नेटवर्क है। हमारा संकल्प निष्पक्ष पत्रकारिता, तथ्यपरक विश्लेषण और जमीनी स्तर पर जनता की आवाज को मजबूती प्रदान करना है।
+              अपना बीकानेर (Apna Bikaner) बीकानेर व राजस्थान का प्रमुख और निर्भीक डिजिटल समाचार नेटवर्क है। हमारा संकल्प निष्पक्ष पत्रकारिता, तथ्यपरक विश्लेषण और जमीनी स्तर पर जनता की आवाज को मजबूती प्रदान करना है।
             </p>
             <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400 pt-2">
-              <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-red-500" /> राजस्थान, भारत</span>
-              <span className="flex items-center gap-1.5"><Mail className="w-3.5 h-3.5 text-amber-500" /> editor@tharmedia.in</span>
+              <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-red-500" /> बीकानेर, राजस्थान, भारत</span>
+              <span className="flex items-center gap-1.5"><Mail className="w-3.5 h-3.5 text-amber-500" /> editor@apnabikaner.com</span>
             </div>
           </div>
 
@@ -112,7 +112,7 @@ export default function Footer() {
 
         {/* Bottom copyright */}
         <div className="border-t border-slate-900/60 pt-6 text-center text-xs text-slate-500">
-          <p>© {currentYear} थार मीडिया (Thar Media Network) सर्वाधिकार सुरक्षित। किसी भी सामग्री की अनधिकृत प्रतिलिपि प्रतिबंधित है।</p>
+          <p>© {currentYear} अपना बीकानेर (Apna Bikaner Network) सर्वाधिकार सुरक्षित। किसी भी सामग्री की अनधिकृत प्रतिलिपि प्रतिबंधित है।</p>
         </div>
       </div>
     </footer>

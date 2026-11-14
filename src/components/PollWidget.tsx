@@ -146,7 +146,7 @@ export default function PollWidget({
     ? `${window.location.origin}/polls/${poll.slug}` 
     : `http://localhost:3000/polls/${poll.slug}`;
 
-  const shareText = `थार मीडिया जनमत सर्वेक्षण (Thar Media Poll):\n"${poll.title}"\nअपना कीमती वोट दें और परिणाम देखें 👉 ${publicUrl}`;
+  const shareText = `अपना बीकानेर जनमत सर्वेक्षण (Apna Bikaner Poll):\n"${poll.title}"\nअपना कीमती वोट दें और परिणाम देखें 👉 ${publicUrl}`;
 
   const copyShareLink = async () => {
     try {
@@ -172,7 +172,7 @@ export default function PollWidget({
         <div className="flex items-center gap-2">
           <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black tracking-wide uppercase bg-red-600 text-white shadow-xs">
             <Vote className="w-3.5 h-3.5" />
-            थार जनमत पोल
+            बीकानेर जनमत पोल
           </span>
           {poll.category && (
             <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md ${

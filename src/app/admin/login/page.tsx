@@ -63,10 +63,10 @@ export default function AdminLoginPage() {
         {/* Brand Header */}
         <div className="text-center space-y-2">
           <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-red-600 to-amber-500 flex items-center justify-center mx-auto shadow-lg text-white font-black text-xl">
-            था
+            अ
           </div>
           <h1 className="text-2xl font-black tracking-tight text-white">
-            {mode === 'login' ? 'थार मीडिया पैनल लॉगिन' : 'नया यूजर खाता बनाएं'}
+            {mode === 'login' ? 'अपना बीकानेर पैनल लॉगिन' : 'नया यूजर खाता बनाएं'}
           </h1>
           <p className="text-xs text-slate-400">
             {mode === 'login' 

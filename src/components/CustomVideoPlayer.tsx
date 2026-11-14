@@ -56,10 +56,10 @@ export default function CustomVideoPlayer({
           </span>
           <span className="text-white font-black text-xs tracking-wide flex items-center gap-1.5 uppercase">
             <Video className="w-3.5 h-3.5 text-red-500" />
-            थार मीडिया प्लेयर
+            अपना बीकानेर प्लेयर
           </span>
           <span className="hidden sm:inline-block text-[11px] bg-red-950/80 text-red-300 font-bold px-2 py-0.5 rounded border border-red-800/60">
-            THAR MEDIA • HD
+            APNA BIKANER • HD
           </span>
         </div>
 

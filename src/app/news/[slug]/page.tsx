@@ -50,11 +50,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: art.og_title || art.title,
       description: art.og_description || art.summary,
       url: `${siteUrl}/news/${art.slug}`,
-      siteName: 'Thar Media',
+      siteName: 'Apna Bikaner',
       type: 'article',
       publishedTime: art.published_at || art.created_at,
       modifiedTime: art.updated_at,
-      authors: [art.author?.name || art.reporter_name || 'थार मीडिया विशेष संवाददाता'],
+      authors: [art.author?.name || art.reporter_name || 'अपना बीकानेर विशेष संवाददाता'],
       images: [
         {
           url: art.og_image || art.featured_image || `${siteUrl}/og-default.jpg`,

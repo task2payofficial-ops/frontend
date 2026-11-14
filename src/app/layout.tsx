@@ -7,15 +7,15 @@ import { getCategories, getLocations, getWeather, getBreakingNews, getSiteSettin
 
 export const metadata: Metadata = {
   title: {
-    default: "Thar Media | थार मीडिया - निष्पक्ष, सटीक और भरोसेमंद डिजिटल न्यूज़ नेटवर्क",
-    template: "%s | Thar Media",
+    default: "अपना बीकानेर | Apna Bikaner - निष्पक्ष, सटीक और भरोसेमंद डिजिटल न्यूज़ नेटवर्क",
+    template: "%s | Apna Bikaner",
   },
-  description: "थार मीडिया (Thar Media) - राजस्थान, बीकानेर, जयपुर, जोधपुर, अपराध, राजनीति, शिक्षा, REET और कृषि से जुड़ी ताज़ा, प्रामाणिक और विस्तृत हिंदी खबरें।",
-  keywords: ["थार मीडिया", "Thar Media", "Thar News", "Rajasthan News in Hindi", "Bikaner News", "Jaipur News", "REET 2026", "कृषि समाचार", "हिंदी न्यूज़"],
-  authors: [{ name: "Thar Media Editorial Team" }],
-  creator: "Thar Media",
-  publisher: "Thar Media Network",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
+  description: "अपना बीकानेर (Apna Bikaner) - बीकानेर, राजस्थान, अपराध, राजनीति, शिक्षा, REET और कृषि से जुड़ी ताज़ा, प्रामाणिक और विस्तृत हिंदी खबरें।",
+  keywords: ["अपना बीकानेर", "Apna Bikaner", "Apna Bikaner News", "Bikaner News in Hindi", "Jaipur News", "REET 2026", "कृषि समाचार", "राजस्थान न्यूज़"],
+  authors: [{ name: "Apna Bikaner Editorial Team" }],
+  creator: "Apna Bikaner",
+  publisher: "Apna Bikaner Network",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://apnabikaner.com"),
   alternates: {
     canonical: "/",
     types: {
@@ -26,23 +26,23 @@ export const metadata: Metadata = {
     type: "website",
     locale: "hi_IN",
     url: "/",
-    siteName: "Thar Media",
-    title: "Thar Media (थार मीडिया) - सत्य, निष्पक्षता और मरुधरा की सच्ची आवाज",
-    description: "थार मीडिया - राजस्थान, बीकानेर, जयपुर और देश-विदेश की ताज़ा एवं विश्वसनीय खबरें।",
+    siteName: "Apna Bikaner",
+    title: "अपना बीकानेर (Apna Bikaner) - सत्य, निष्पक्षता और बीकानेर की सच्ची आवाज",
+    description: "अपना बीकानेर - बीकानेर, राजस्थान और देश-विदेश की ताज़ा एवं विश्वसनीय खबरें।",
     images: [
       {
         url: "/og-default.jpg",
         width: 1200,
         height: 630,
-        alt: "Thar Media - थार मीडिया",
+        alt: "अपना बीकानेर - Apna Bikaner",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Thar Media | थार मीडिया",
-    description: "राजस्थान और मरुधरा का प्रमुख डिजिटल समाचार नेटवर्क",
-    creator: "@TharMedia",
+    title: "अपना बीकानेर | Apna Bikaner",
+    description: "बीकानेर और राजस्थान का प्रमुख डिजिटल समाचार नेटवर्क",
+    creator: "@ApnaBikaner",
   },
   robots: {
     index: true,
@@ -74,18 +74,18 @@ export default async function RootLayout({
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "NewsMediaOrganization",
-    "name": settings?.site_name || "Thar Media (थार मीडिया)",
-    "url": process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+    "name": settings?.site_name || "अपना बीकानेर (Apna Bikaner)",
+    "url": process.env.NEXT_PUBLIC_SITE_URL || "https://apnabikaner.com",
     "logo": {
       "@type": "ImageObject",
-      "url": `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/logo.png`,
+      "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://apnabikaner.com"}/logo.png`,
       "width": 600,
       "height": 60,
     },
     "sameAs": [
-      "https://facebook.com/tharmedianetwork",
-      "https://twitter.com/tharmedia",
-      "https://youtube.com/tharmedia",
+      "https://facebook.com/apnabikanernews",
+      "https://twitter.com/apnabikaner",
+      "https://youtube.com/apnabikaner",
     ],
   };
 

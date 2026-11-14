@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!data?.poll) {
     return {
-      title: 'जनमत सर्वेक्षण | थार मीडिया (Thar Media)',
+      title: 'जनमत सर्वेक्षण | अपना बीकानेर (Apna Bikaner)',
     };
   }
 
@@ -25,16 +25,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const pageUrl = `${siteUrl}/polls/${poll.slug}`;
 
   return {
-    title: `${poll.title} | थार मीडिया जनमत`,
-    description: poll.description || `थार मीडिया (Thar Media) जनमत सर्वेक्षण: "${poll.title}" पर अपना कीमती वोट दर्ज करें।`,
+    title: `${poll.title} | अपना बीकानेर जनमत`,
+    description: poll.description || `अपना बीकानेर (Apna Bikaner) जनमत सर्वेक्षण: "${poll.title}" पर अपना कीमती वोट दर्ज करें।`,
     alternates: {
       canonical: pageUrl,
     },
     openGraph: {
       title: `📊 जनमत सर्वेक्षण: ${poll.title}`,
-      description: poll.description || 'थार मीडिया पर निष्पक्ष वोट दें और जनता का मूड जानें।',
+      description: poll.description || 'अपना बीकानेर पर निष्पक्ष वोट दें और जनता का मूड जानें।',
       url: pageUrl,
-      siteName: 'Thar Media (थार मीडिया)',
+      siteName: 'अपना बीकानेर (Apna Bikaner)',
       type: 'website',
       images: [
         {
@@ -48,8 +48,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     twitter: {
       card: 'summary_large_image',
       title: poll.title,
-      description: 'थार मीडिया लाइव जनमत पोल - अपनी राय दें',
-      creator: '@TharMedia',
+      description: 'अपना बीकानेर लाइव जनमत पोल - अपनी राय दें',
+      creator: '@ApnaBikaner',
     },
   };
 }
@@ -89,7 +89,7 @@ export default async function SinglePollPage({ params }: Props) {
         <div className="flex items-center gap-2">
           <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
           <span>
-            <strong>100% निष्पक्ष मतदान:</strong> थार मीडिया किसी भी राजनीतिक दल या दबाव से मुक्त, स्वतंत्र डिजिटल सर्वेक्षण आयोजित करता है।
+            <strong>100% निष्पक्ष मतदान:</strong> अपना बीकानेर किसी भी राजनीतिक दल या दबाव से मुक्त, स्वतंत्र डिजिटल सर्वेक्षण आयोजित करता है।
           </span>
         </div>
         <Link 

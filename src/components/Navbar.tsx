@@ -197,19 +197,19 @@ export default function Navbar({
         <div className="flex flex-col items-center lg:items-start">
           <Link href="/" className="group flex items-center gap-2.5">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-red-700 via-red-600 to-amber-500 flex items-center justify-center text-white font-black text-xl shadow-md border border-red-500/30">
-              था
+              अ
             </div>
             <div>
               <div className="flex items-center gap-1.5">
                 <span className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                  थार <span className="text-red-600">मीडिया</span>
+                  अपना <span className="text-red-600">बीकानेर</span>
                 </span>
                 <span className="text-[10px] font-black uppercase px-1.5 py-0.5 bg-amber-500 text-slate-950 rounded shadow-xs tracking-wider">
-                  THAR MEDIA
+                  APNA BIKANER
                 </span>
               </div>
               <span className="hidden sm:block text-[10px] text-slate-500 font-bold tracking-wider uppercase">
-                सत्य, निष्पक्षता और मरुधरा की बुलंद आवाज
+                सत्य, निष्पक्षता और बीकानेर की बुलंद आवाज
               </span>
             </div>
           </Link>

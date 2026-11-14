@@ -423,7 +423,7 @@ fbq('track', 'PageView');
                   type="text"
                   value={siteName}
                   onChange={(e) => setSiteName(e.target.value)}
-                  placeholder="उदा. अपना बीकानेर / थार मीडिया"
+                  placeholder="उदा. अपना बीकानेर / अपना बीकानेर"
                   className="w-full text-xs font-semibold px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-red-500"
                 />
               </div>

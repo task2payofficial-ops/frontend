@@ -22,9 +22,12 @@ import {
   Trash2,
   Link as LinkIcon,
   Loader2,
-  X
+  X,
+  Wand2
 } from 'lucide-react';
 import { Category, Location } from '@/lib/types';
+import { generateEnglishSlug } from '@/lib/slugify';
+import RichTextEditor from '@/components/admin/RichTextEditor';
 
 interface ArticleEditorFormProps {
   initialData?: any;
@@ -39,6 +42,7 @@ export default function ArticleEditorForm({ initialData, isEdit = false }: Artic
   const [titleEn, setTitleEn] = useState(initialData?.title_en || '');
   const [shortHeadline, setShortHeadline] = useState(initialData?.short_headline || '');
   const [slug, setSlug] = useState(initialData?.slug || '');
+  const [slugManuallyEdited, setSlugManuallyEdited] = useState(Boolean(initialData?.slug));
   const [summary, setSummary] = useState(initialData?.summary || '');
   const [content, setContent] = useState(initialData?.content || '');
   const [featuredImage, setFeaturedImage] = useState(initialData?.featured_image || '');
@@ -378,8 +382,19 @@ export default function ArticleEditorForm({ initialData, isEdit = false }: Artic
               <input
                 type="text"
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                onBlur={checkDuplicate}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setTitle(val);
+                  if (!slugManuallyEdited && !isEdit) {
+                    setSlug(generateEnglishSlug(val));
+                  }
+                }}
+                onBlur={() => {
+                  checkDuplicate();
+                  if (!slug && title) {
+                    setSlug(generateEnglishSlug(title));
+                  }
+                }}
                 required
                 placeholder="आकर्षक एवं तथ्यपरक हिंदी हेडलाइन दर्ज करें..."
                 className="w-full text-base font-bold px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-red-500 bg-slate-50 focus:bg-white"
@@ -401,14 +416,33 @@ export default function ArticleEditorForm({ initialData, isEdit = false }: Artic
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  कस्टम यूआरएल स्लग (URL Slug)
-                </label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-xs font-semibold text-slate-700">
+                    अंग्रेजी यूआरएल स्लग (English URL Slug)
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (title) {
+                        setSlug(generateEnglishSlug(title));
+                        setSlugManuallyEdited(false);
+                      }
+                    }}
+                    title="हिंदी हेडलाइन से ऑटोमैटिक अंग्रेजी स्लग तैयार करें"
+                    className="text-[11px] font-bold text-red-600 hover:text-red-700 flex items-center gap-1 cursor-pointer bg-red-50 hover:bg-red-100 px-2 py-0.5 rounded-md transition-colors"
+                  >
+                    <Wand2 className="w-3 h-3" />
+                    <span>ऑटो स्लग बनाएं</span>
+                  </button>
+                </div>
                 <input
                   type="text"
                   value={slug}
-                  onChange={(e) => setSlug(e.target.value)}
-                  placeholder="rajasthan-news-slug-2026"
+                  onChange={(e) => {
+                    setSlug(e.target.value);
+                    setSlugManuallyEdited(true);
+                  }}
+                  placeholder="bikaner-news-headline-slug"
                   className="w-full text-xs px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-red-500 font-mono"
                 />
               </div>
@@ -429,16 +463,15 @@ export default function ArticleEditorForm({ initialData, isEdit = false }: Artic
 
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1 flex items-center justify-between">
-                <span>विस्तृत समाचार सामग्री (Full Article HTML/Rich Content) *</span>
-                <span className="text-[11px] font-normal text-slate-400">HTML टैग्स समर्थित हैं</span>
+                <span>विस्तृत समाचार सामग्री (WordPress स्टाइल विज़ुअल एडिटर) *</span>
+                <span className="text-[11px] font-medium text-slate-500">
+                  बीच में फोटो, लिंक, हेडिंग व HTML कोड सीधे जोड़ें
+                </span>
               </label>
-              <textarea
+              <RichTextEditor
                 value={content}
-                onChange={(e) => setContent(e.target.value)}
-                rows={12}
-                required
-                placeholder="<p>जयपुर। समाचार का पूर्ण विवरण यहाँ लिखें...</p>"
-                className="w-full text-xs sm:text-sm font-mono px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-red-500 bg-slate-50 focus:bg-white leading-relaxed"
+                onChange={setContent}
+                placeholder="समाचार का संपूर्ण विवरण यहाँ लिखें..."
               />
             </div>
           </div>

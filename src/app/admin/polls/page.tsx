@@ -191,7 +191,7 @@ export default function AdminPollsPage() {
           <div className="flex items-center gap-2 mb-1">
             <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-pulse"></span>
             <span className="text-xs font-bold text-red-600 uppercase tracking-wider">
-              {currentUser?.role === 'user' ? 'यूजर पोल सेंटर' : 'थार मीडिया जनमत प्रणाली'}
+              {currentUser?.role === 'user' ? 'यूजर पोल सेंटर' : 'अपना बीकानेर जनमत प्रणाली'}
             </span>
           </div>
           <h1 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">

@@ -174,7 +174,7 @@ export default async function HomePage() {
               <span>प्रमाणित एवं निष्पक्ष पत्रकारिता</span>
             </h4>
             <p className="text-xs text-slate-600 leading-relaxed">
-              थार मीडिया (Thar Media) की हर रिपोर्ट वरिष्ठ संपादकीय टीम द्वारा फैक्ट-चेक की जाती है। यदि आपको किसी समाचार में सुधार की आवश्यकता लगे, तो कृपया हमारी <Link href="/corrections-policy" className="text-red-600 underline font-semibold">सुधार नीति</Link> के अंतर्गत संपर्क करें।
+              अपना बीकानेर (Apna Bikaner) की हर रिपोर्ट वरिष्ठ संपादकीय टीम द्वारा फैक्ट-चेक की जाती है। यदि आपको किसी समाचार में सुधार की आवश्यकता लगे, तो कृपया हमारी <Link href="/corrections-policy" className="text-red-600 underline font-semibold">सुधार नीति</Link> के अंतर्गत संपर्क करें।
             </p>
           </div>
 

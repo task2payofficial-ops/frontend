@@ -6,9 +6,9 @@ import { getPolls } from '@/lib/api';
 import PollWidget from '@/components/PollWidget';
 
 export const metadata: Metadata = {
-  title: 'जनमत सर्वेक्षण (Live Public Polls) | थार मीडिया (Thar Media)',
-  description: 'राजस्थान और राष्ट्रीय समसामयिक मुद्दों पर थार मीडिया का निष्पक्ष जनमत सर्वेक्षण। अपनी राय दें और जनता का मूड जानें।',
-  keywords: ['थार मीडिया जनमत', 'Thar Media Polls', 'Rajasthan Opinion Poll', 'जनमत सर्वेक्षण', 'लाइव पोलिंग'],
+  title: 'जनमत सर्वेक्षण (Live Public Polls) | अपना बीकानेर (Apna Bikaner)',
+  description: 'राजस्थान और राष्ट्रीय समसामयिक मुद्दों पर अपना बीकानेर का निष्पक्ष जनमत सर्वेक्षण। अपनी राय दें और जनता का मूड जानें।',
+  keywords: ['अपना बीकानेर जनमत', 'Apna Bikaner Polls', 'Rajasthan Opinion Poll', 'जनमत सर्वेक्षण', 'लाइव पोलिंग'],
 };
 
 export default async function PollsPage() {
@@ -24,7 +24,7 @@ export default async function PollsPage() {
         <div className="relative z-10 max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-600 text-white text-xs font-black uppercase mb-3 shadow-xs">
             <Vote className="w-3.5 h-3.5" />
-            <span>थार जनमत सर्वेक्षण • जनता की आवाज़</span>
+            <span>बीकानेर जनमत सर्वेक्षण • जनता की आवाज़</span>
           </div>
 
           <h1 className="text-2xl sm:text-4xl font-black tracking-tight leading-tight mb-3">
@@ -32,7 +32,7 @@ export default async function PollsPage() {
           </h1>
 
           <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-            थार मीडिया (Thar Media) के इस डिजिटल मंच पर हर नागरिक का मत अमूल्य है। राजनीति, कृषि, विकास, शिक्षा और सामाजिक नीतियों पर निष्पक्ष वोट दें और वास्तविक आंकड़े देखें।
+            अपना बीकानेर (Apna Bikaner) के इस डिजिटल मंच पर हर नागरिक का मत अमूल्य है। राजनीति, कृषि, विकास, शिक्षा और सामाजिक नीतियों पर निष्पक्ष वोट दें और वास्तविक आंकड़े देखें।
           </p>
         </div>
       </div>

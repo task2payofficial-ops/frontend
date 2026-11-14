@@ -31,7 +31,7 @@ export default function PollResultsGraph({ poll }: PollResultsGraphProps) {
     ? `${window.location.origin}/polls/${poll.slug}`
     : `http://localhost:3000/polls/${poll.slug}`;
 
-  const shareText = `📊 थार मीडिया जनमत परिणाम (Thar Media Poll Results):\n"${poll.title}"\nकुल मत: ${poll.total_votes}\nलाइव परिणाम ग्राफ और आंकड़े देखें 👉 ${publicResultUrl}`;
+  const shareText = `📊 अपना बीकानेर जनमत परिणाम (Apna Bikaner Poll Results):\n"${poll.title}"\nकुल मत: ${poll.total_votes}\nलाइव परिणाम ग्राफ और आंकड़े देखें 👉 ${publicResultUrl}`;
 
   const copyResultsLink = async () => {
     try {

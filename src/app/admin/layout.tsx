@@ -110,10 +110,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               </div>
               <div>
                 <span className="font-black text-white text-base tracking-tight block">
-                  थार मीडिया <span className="text-red-500">{isRegularUser ? 'यूजर पैनल' : 'एडमिन'}</span>
+                  अपना बीकानेर <span className="text-red-500">{isRegularUser ? 'यूजर पैनल' : 'एडमिन'}</span>
                 </span>
                 <span className="text-[10px] text-slate-500 font-medium">
-                  {isRegularUser ? 'THAR MEDIA • जनमत पोल सेंटर' : 'THAR MEDIA • संपादकीय कक्ष'}
+                  {isRegularUser ? 'APNA BIKANER • जनमत पोल सेंटर' : 'APNA BIKANER • संपादकीय कक्ष'}
                 </span>
               </div>
             </Link>
@@ -196,7 +196,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <Menu className="w-5 h-5" />
             </button>
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider hidden sm:inline">
-              {isRegularUser ? 'थार मीडिया • जनमत पोल सेंटर (User Panel)' : 'थार मीडिया (Thar Media) डिजिटल पोर्टल v1.0'}
+              {isRegularUser ? 'अपना बीकानेर • जनमत पोल सेंटर (User Panel)' : 'अपना बीकानेर (Apna Bikaner) डिजिटल पोर्टल v1.0'}
             </span>
           </div>
 
