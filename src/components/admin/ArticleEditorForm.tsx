@@ -17,7 +17,12 @@ import {
   ExternalLink,
   Eye,
   Calendar,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Upload,
+  Trash2,
+  Link as LinkIcon,
+  Loader2,
+  X
 } from 'lucide-react';
 import { Category, Location } from '@/lib/types';
 
@@ -71,6 +76,55 @@ export default function ArticleEditorForm({ initialData, isEdit = false }: Artic
   const [saving, setSaving] = useState(false);
   const [aiProcessing, setAiProcessing] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
+  // Featured Image Upload State
+  const [imageUploadTab, setImageUploadTab] = useState<'upload' | 'url'>('upload');
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [isDraggingImage, setIsDraggingImage] = useState(false);
+  const fileInputRef = React.useRef<HTMLInputElement | null>(null);
+
+  // Handle Featured Image File Upload
+  const handleImageFile = async (file: File) => {
+    if (!file.type.startsWith('image/')) {
+      alert('कृपया केवल इमेज फ़ाइल (JPG, PNG, WEBP, GIF, AVIF) चुनें।');
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      alert('इमेज का साइज़ 10MB से कम होना चाहिए।');
+      return;
+    }
+
+    setIsUploadingImage(true);
+    const token = localStorage.getItem('admin_token');
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const res = await fetch('/api/v1/admin/articles/upload-image', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json',
+        },
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (res.ok && data.url) {
+        setFeaturedImage(data.url);
+        if (!imageAlt && title) {
+          setImageAlt(title);
+        }
+        setMessage({ type: 'success', text: 'मुख्य तस्वीर (Featured Image) सफलतापूर्वक अपलोड हुई!' });
+      } else {
+        alert(data.message || 'फोटो अपलोड करने में त्रुटि आई। कृपया पुनः प्रयास करें।');
+      }
+    } catch {
+      alert('अपलोड सर्वर से कनेक्ट नहीं हो सका। कृपया जांचें कि बैकएंड चालू है।');
+    } finally {
+      setIsUploadingImage(false);
+    }
+  };
 
   useEffect(() => {
     // Load categories and locations
@@ -153,6 +207,7 @@ export default function ArticleEditorForm({ initialData, isEdit = false }: Artic
       summary,
       content,
       featured_image: featuredImage || null,
+      og_image: featuredImage || null,
       image_caption: imageCaption || null,
       image_alt: imageAlt || title,
       category_id: categoryId || null,
@@ -389,55 +444,187 @@ export default function ArticleEditorForm({ initialData, isEdit = false }: Artic
           </div>
 
           {/* Media & Images Card */}
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
-            <h3 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-2 flex items-center gap-1.5">
-              <ImageIcon className="w-4 h-4 text-red-600" />
-              <span>मुख्य छवि एवं मीडिया (Featured Image)</span>
-            </h3>
-
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                मुख्य तस्वीर यूआरएल (Image URL)
-              </label>
-              <input
-                type="url"
-                value={featuredImage}
-                onChange={(e) => setFeaturedImage(e.target.value)}
-                placeholder="https://images.unsplash.com/photo-..."
-                className="w-full text-xs px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-red-500"
-              />
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-5">
+            <div className="border-b border-slate-100 pb-3 flex flex-wrap items-center justify-between gap-2">
+              <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                <ImageIcon className="w-4.5 h-4.5 text-red-600" />
+                <span>मुख्य तस्वीर / फीचर इमेज (Featured Image)</span>
+              </h3>
+              <span className="text-[11px] font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full">
+                अनुशंसित 16:9 अनुपात (1200x675)
+              </span>
             </div>
 
-            {featuredImage && (
-              <div className="w-48 aspect-16/10 rounded-lg overflow-hidden bg-slate-100 border border-slate-200">
-                <img src={featuredImage} alt="Preview" className="w-full h-full object-cover" />
+            {/* Mode Selector Tabs: Upload File vs Web URL */}
+            <div className="flex items-center gap-2 border-b border-slate-200 pb-2">
+              <button
+                type="button"
+                onClick={() => setImageUploadTab('upload')}
+                className={`text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-colors cursor-pointer ${
+                  imageUploadTab === 'upload'
+                    ? 'bg-red-600 text-white shadow-xs'
+                    : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                <Upload className="w-3.5 h-3.5" />
+                डिवाइस से फ़ोटो चुनें (Upload Image)
+              </button>
+              <button
+                type="button"
+                onClick={() => setImageUploadTab('url')}
+                className={`text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-colors cursor-pointer ${
+                  imageUploadTab === 'url'
+                    ? 'bg-red-600 text-white shadow-xs'
+                    : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                <LinkIcon className="w-3.5 h-3.5" />
+                वेब URL दर्ज करें (Image URL)
+              </button>
+            </div>
+
+            {/* Tab 1: File Upload Drag & Drop Box */}
+            {imageUploadTab === 'upload' && (
+              <div>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) handleImageFile(file);
+                  }}
+                />
+
+                <div
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setIsDraggingImage(true);
+                  }}
+                  onDragLeave={() => setIsDraggingImage(false)}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    setIsDraggingImage(false);
+                    const file = e.dataTransfer.files?.[0];
+                    if (file) handleImageFile(file);
+                  }}
+                  onClick={() => !isUploadingImage && fileInputRef.current?.click()}
+                  className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${
+                    isDraggingImage
+                      ? 'border-red-500 bg-red-50/50 scale-[1.01]'
+                      : 'border-slate-300 hover:border-red-400 bg-slate-50/70 hover:bg-white'
+                  }`}
+                >
+                  {isUploadingImage ? (
+                    <div className="flex flex-col items-center justify-center py-4 text-red-600">
+                      <Loader2 className="w-8 h-8 animate-spin mb-2" />
+                      <p className="text-xs font-bold">तस्वीर अपलोड हो रही है, कृपया प्रतीक्षा करें...</p>
+                      <p className="text-[11px] text-slate-500 mt-0.5">सर्वर पर सुरक्षित रूप से सहेजा जा रहा है</p>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center py-2">
+                      <div className="w-12 h-12 rounded-full bg-red-50 text-red-600 flex items-center justify-center mb-3">
+                        <Upload className="w-6 h-6" />
+                      </div>
+                      <p className="text-xs font-bold text-slate-800">
+                        फ़ोटो अपलोड करने के लिए यहाँ क्लिक करें या ड्रैग-एंड-ड्रॉप करें
+                      </p>
+                      <p className="text-[11px] text-slate-500 mt-1">
+                        JPG, PNG, WEBP, AVIF या GIF (अधिकतम आकार 10MB)
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Tab 2: URL Input */}
+            {imageUploadTab === 'url' && (
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  चित्र कैप्शन (Image Caption)
+                  इमेज डायरेक्ट वेब यूआरएल (Direct Image URL)
+                </label>
+                <input
+                  type="url"
+                  value={featuredImage}
+                  onChange={(e) => setFeaturedImage(e.target.value)}
+                  placeholder="https://images.unsplash.com/... या कोई भी वैध इमेज लिंक"
+                  className="w-full text-xs px-3 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-red-500"
+                />
+              </div>
+            )}
+
+            {/* Image Preview & Management */}
+            {featuredImage && (
+              <div className="space-y-2 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                    <CheckCircle className="w-3.5 h-3.5 text-emerald-600" />
+                    फ़ीचर्ड इमेज पूर्वावलोकन (Preview)
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="text-[11px] font-semibold text-slate-700 hover:text-red-600 px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded-md transition-colors cursor-pointer"
+                    >
+                      फोटो बदलें
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setFeaturedImage('')}
+                      className="text-[11px] font-semibold text-red-600 hover:text-red-700 px-2.5 py-1 bg-white hover:bg-red-50 border border-red-200 rounded-md transition-colors flex items-center gap-1 cursor-pointer"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                      हटाएं
+                    </button>
+                  </div>
+                </div>
+
+                <div className="relative max-w-md aspect-16/10 rounded-lg overflow-hidden bg-slate-900 border border-slate-300 shadow-xs">
+                  <img
+                    src={featuredImage}
+                    alt="Featured preview"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=800';
+                    }}
+                  />
+                  {imageCaption && (
+                    <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-2 text-white">
+                      <p className="text-[11px] truncate font-medium">{imageCaption}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Caption & Alt Text */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  चित्र कैप्शन एवं फोटो क्रेडिट (Image Caption / Credit)
                 </label>
                 <input
                   type="text"
                   value={imageCaption}
                   onChange={(e) => setImageCaption(e.target.value)}
-                  placeholder="चित्र का विवरण या क्रेडिट..."
-                  className="w-full text-xs px-3 py-2 rounded-lg border border-slate-300"
+                  placeholder="उदा. जयपुर में आयोजित राज्यस्तरीय समारोह (फोटो: संवाद सूत्र)"
+                  className="w-full text-xs px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-red-500"
                 />
               </div>
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  इमेज Alt टेक्स्ट (SEO के लिए)
+                  इमेज Alt टेक्स्ट (SEO व एक्सेसिबिलिटी के लिए)
                 </label>
                 <input
                   type="text"
                   value={imageAlt}
                   onChange={(e) => setImageAlt(e.target.value)}
-                  placeholder="तस्वीर का विवरण..."
-                  className="w-full text-xs px-3 py-2 rounded-lg border border-slate-300"
+                  placeholder="उदा. राजस्थान विधानसभा सत्र 2026"
+                  className="w-full text-xs px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-red-500"
                 />
               </div>
             </div>
