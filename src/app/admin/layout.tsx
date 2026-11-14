@@ -82,6 +82,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         { label: 'ऑटोमेशन व स्रोत (Sources)', href: '/admin/sources', icon: Radio },
         { label: 'जनमत पोल (Polls)', href: '/admin/polls', icon: Vote },
         { label: 'विज्ञापन प्रबंधन (Ads)', href: '/admin/ads', icon: DollarSign },
+        { label: 'हेडर व फूटर कोड (Settings)', href: '/admin/settings', icon: Sliders },
       ];
 
   return (

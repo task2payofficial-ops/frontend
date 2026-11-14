@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { getCategories, getLocations, getWeather, getBreakingNews } from "@/lib/api";
+import CustomCodeInjector from "@/components/CustomCodeInjector";
+import { getCategories, getLocations, getWeather, getBreakingNews, getSiteSettings } from "@/lib/api";
 
 export const metadata: Metadata = {
   title: {
@@ -61,18 +62,19 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // SSR fetch for navigation data
-  const [categories, locations, weather, breaking] = await Promise.all([
+  // SSR fetch for navigation data & site settings
+  const [categories, locations, weather, breaking, settings] = await Promise.all([
     getCategories(),
     getLocations(),
     getWeather('Jaipur'),
     getBreakingNews(),
+    getSiteSettings(),
   ]);
 
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "NewsMediaOrganization",
-    "name": "Thar Media (थार मीडिया)",
+    "name": settings?.site_name || "Thar Media (थार मीडिया)",
     "url": process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
     "logo": {
       "@type": "ImageObject",
@@ -90,6 +92,13 @@ export default async function RootLayout({
   return (
     <html lang="hi">
       <head>
+        <CustomCodeInjector
+          headerCode={settings?.header_code}
+          footerCode={settings?.footer_code}
+          customCss={settings?.custom_css}
+          googleAnalyticsId={settings?.google_analytics_id}
+          adsenseClientId={settings?.adsense_client_id}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}

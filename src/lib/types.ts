@@ -9,6 +9,18 @@ export interface User {
   is_active: boolean;
 }
 
+export interface SiteSettings {
+  header_code?: string;
+  footer_code?: string;
+  google_analytics_id?: string;
+  adsense_client_id?: string;
+  custom_css?: string;
+  site_name?: string;
+  site_tagline?: string;
+  contact_email?: string;
+  contact_phone?: string;
+}
+
 export interface Category {
   id: number;
   name_hi: string;
