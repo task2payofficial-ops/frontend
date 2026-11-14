@@ -114,8 +114,11 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
       const data = await res.json();
       if (res.ok && data.url) {
         let finalUrl = data.url;
-        if (apiBase && (finalUrl.includes('localhost:8000') || finalUrl.includes('127.0.0.1:8000'))) {
-          finalUrl = finalUrl.replace(/https?:\/\/(localhost|127\.0\.0\.1):8000/, apiBase.replace(/\/$/, ''));
+        if (finalUrl.includes('://apnabikaner.com/') && !finalUrl.includes('://api.apnabikaner.com/')) {
+          finalUrl = finalUrl.replace('://apnabikaner.com/', '://api.apnabikaner.com/');
+        }
+        if (apiBase && (finalUrl.includes('localhost') || finalUrl.includes('127.0.0.1'))) {
+          finalUrl = finalUrl.replace(/https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?/, apiBase.replace(/\/$/, ''));
         }
         setImageUrl(finalUrl);
       } else {

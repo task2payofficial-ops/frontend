@@ -23,17 +23,26 @@ export default function SafeImage({
       return trimmed;
     }
 
-    const apiBase = process.env.NEXT_PUBLIC_API_URL || '';
+    const apiBase = (process.env.NEXT_PUBLIC_API_URL || 'https://api.apnabikaner.com/public').replace(/\/$/, '');
 
-    // Replace localhost or 127.0.0.1 with live API URL if present
-    if (apiBase && (trimmed.includes('localhost:8000') || trimmed.includes('127.0.0.1:8000'))) {
-      return trimmed.replace(/https?:\/\/(localhost|127\.0\.0\.1):8000/, apiBase.replace(/\/$/, ''));
+    // 1. If pointing to main frontend domain instead of api backend
+    if (trimmed.includes('://apnabikaner.com/') && !trimmed.includes('://api.apnabikaner.com/')) {
+      return trimmed.replace('://apnabikaner.com/', '://api.apnabikaner.com/');
     }
 
-    // Resolve relative /storage or /uploads paths to live API
-    if (apiBase && (trimmed.startsWith('/storage') || trimmed.startsWith('/uploads') || trimmed.startsWith('storage/') || trimmed.startsWith('uploads/'))) {
+    // 2. Replace localhost or 127.0.0.1 with live API URL if present
+    if (trimmed.includes('localhost') || trimmed.includes('127.0.0.1')) {
+      return trimmed.replace(/https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?/, apiBase);
+    }
+
+    // 3. Resolve relative /storage or /uploads paths to live API
+    if (trimmed.startsWith('/storage') || trimmed.startsWith('/uploads') || trimmed.startsWith('storage/') || trimmed.startsWith('uploads/') || trimmed.startsWith('/public/uploads')) {
       const cleanPath = trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
-      return `${apiBase.replace(/\/$/, '')}${cleanPath}`;
+      // Prevent /public/public/
+      if (apiBase.endsWith('/public') && cleanPath.startsWith('/public/')) {
+        return `${apiBase}${cleanPath.substring(7)}`;
+      }
+      return `${apiBase}${cleanPath}`;
     }
 
     return trimmed;
