@@ -28,6 +28,7 @@ import {
 import { Category, Location } from '@/lib/types';
 import { generateEnglishSlug } from '@/lib/slugify';
 import RichTextEditor from '@/components/admin/RichTextEditor';
+import SafeImage from '@/components/SafeImage';
 
 interface ArticleEditorFormProps {
   initialData?: any;
@@ -98,13 +99,22 @@ export default function ArticleEditorForm({ initialData, isEdit = false }: Artic
       return;
     }
 
+    // तुरंत लोकल प्रीव्यू दिखाएं ताकि यूजर को अपनी चुनी हुई फोटो दिखे
+    const localPreviewUrl = URL.createObjectURL(file);
+    setFeaturedImage(localPreviewUrl);
+
     setIsUploadingImage(true);
     const token = localStorage.getItem('admin_token');
     const formData = new FormData();
     formData.append('image', file);
 
+    const apiBase = process.env.NEXT_PUBLIC_API_URL || '';
+    const uploadUrl = apiBase
+      ? `${apiBase.replace(/\/$/, '')}/api/v1/admin/articles/upload-image`
+      : '/api/v1/admin/articles/upload-image';
+
     try {
-      const res = await fetch('/api/v1/admin/articles/upload-image', {
+      const res = await fetch(uploadUrl, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -115,7 +125,11 @@ export default function ArticleEditorForm({ initialData, isEdit = false }: Artic
 
       const data = await res.json();
       if (res.ok && data.url) {
-        setFeaturedImage(data.url);
+        let finalUrl = data.url;
+        if (apiBase && (finalUrl.includes('localhost') || finalUrl.includes('127.0.0.1'))) {
+          finalUrl = finalUrl.replace(/https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?/, apiBase.replace(/\/$/, ''));
+        }
+        setFeaturedImage(finalUrl);
         if (!imageAlt && title) {
           setImageAlt(title);
         }
@@ -123,8 +137,9 @@ export default function ArticleEditorForm({ initialData, isEdit = false }: Artic
       } else {
         alert(data.message || 'फोटो अपलोड करने में त्रुटि आई। कृपया पुनः प्रयास करें।');
       }
-    } catch {
-      alert('अपलोड सर्वर से कनेक्ट नहीं हो सका। कृपया जांचें कि बैकएंड चालू है।');
+    } catch (err: any) {
+      console.error('Upload error:', err);
+      alert('अपलोड सर्वर से कनेक्ट नहीं हो सका। कृपया जांचें कि बैकएंड पर uploadImage कंट्रोलर अपडेट है।');
     } finally {
       setIsUploadingImage(false);
     }
@@ -616,19 +631,29 @@ export default function ArticleEditorForm({ initialData, isEdit = false }: Artic
                 </div>
 
                 <div className="relative max-w-md aspect-16/10 rounded-lg overflow-hidden bg-slate-900 border border-slate-300 shadow-xs">
-                  <img
+                  <SafeImage
                     src={featuredImage}
                     alt="Featured preview"
                     className="w-full h-full object-cover"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=800';
-                    }}
                   />
                   {imageCaption && (
                     <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-2 text-white">
                       <p className="text-[11px] truncate font-medium">{imageCaption}</p>
                     </div>
                   )}
+                </div>
+
+                <div className="flex items-center justify-between text-[11px] text-slate-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200">
+                  <span className="truncate pr-2 font-mono">लिंक: {featuredImage}</span>
+                  <a
+                    href={featuredImage}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-red-600 hover:text-red-700 font-bold shrink-0 flex items-center gap-1"
+                  >
+                    <span>देखें</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
                 </div>
               </div>
             )}

@@ -96,8 +96,13 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
     const formData = new FormData();
     formData.append('image', file);
 
+    const apiBase = process.env.NEXT_PUBLIC_API_URL || '';
+    const uploadUrl = apiBase
+      ? `${apiBase.replace(/\/$/, '')}/api/v1/admin/articles/upload-image`
+      : '/api/v1/admin/articles/upload-image';
+
     try {
-      const res = await fetch('/api/v1/admin/articles/upload-image', {
+      const res = await fetch(uploadUrl, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -108,7 +113,11 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
 
       const data = await res.json();
       if (res.ok && data.url) {
-        setImageUrl(data.url);
+        let finalUrl = data.url;
+        if (apiBase && (finalUrl.includes('localhost:8000') || finalUrl.includes('127.0.0.1:8000'))) {
+          finalUrl = finalUrl.replace(/https?:\/\/(localhost|127\.0\.0\.1):8000/, apiBase.replace(/\/$/, ''));
+        }
+        setImageUrl(finalUrl);
       } else {
         alert(data.message || 'फोटो अपलोड करने में त्रुटि आई।');
       }
